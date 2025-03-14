@@ -81,8 +81,13 @@ async function handleRequest(request) {
       const emailPayload = {
         from: 'Voxpro <onboarding@resend.dev>',
         to: email,
-        subject: 'Welcome to Voxpro Waitlist',
-        text: 'Thank you for joining our waitlist. We are excited to have you on board!'
+        subject: 'Voxpro Waitlist Confirmation #' + Date.now(),
+        text: `Hello,
+
+Thank you for joining the Voxpro waitlist. This is a confirmation that we've received your email address (${email}).
+
+Best regards,
+The Voxpro Team`
       }
       
       console.log('📧 Email payload:', JSON.stringify(emailPayload))
