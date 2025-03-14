@@ -105,4 +105,4 @@ async function handleRequest(request) {
       headers: corsHeaders
     })
   }
-} 
+}

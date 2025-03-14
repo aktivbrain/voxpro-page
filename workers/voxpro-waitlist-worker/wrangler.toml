@@ -9,4 +9,4 @@ kv_namespaces = [
 
 [vars]
 # The API key will be set through the Cloudflare dashboard
-# RESEND_API_KEY = "your-api-key-here" 
+# RESEND_API_KEY = "your-api-key-here"

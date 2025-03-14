@@ -44,4 +44,4 @@ The worker includes comprehensive error handling for:
 - KV storage issues
 - Email sending failures
 
-All errors are logged and return appropriate HTTP status codes. 
+All errors are logged and return appropriate HTTP status codes.
