@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Header from '@/components/Header'
+import WaitlistForm from '@/components/WaitlistForm'
 
 export default function Home() {
   return (
@@ -29,19 +30,7 @@ export default function Home() {
           <p className="text-xl md:text-2xl text-voxpro-gray max-w-2xl mx-auto mb-12 leading-relaxed">
             Transform your voice with personalized AI-powered lessons. Meet Sky, your dedicated AI voice training companion.
           </p>
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <button className="group relative bg-gradient-to-r from-voxpro-coral to-voxpro-coral-light text-voxpro-navy px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg shadow-voxpro-coral/20">
-              <span className="flex items-center gap-2">
-                Join Early Access
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-            </button>
-            <button className="group relative border-2 border-voxpro-coral text-voxpro-coral px-8 py-4 rounded-full text-lg font-semibold hover:bg-voxpro-coral/10 transition-all duration-300 backdrop-blur-sm">
-              Learn More
-            </button>
-          </div>
+          <WaitlistForm />
         </div>
       </section>
 
@@ -182,9 +171,7 @@ export default function Home() {
                     <span className="text-xl text-white/60">/month</span>
                   </div>
                   <p className="text-lg text-white/80 mb-10">Get unlimited access to all features</p>
-                  <button className="w-full bg-gradient-to-r from-voxpro-coral to-voxpro-coral-light text-voxpro-navy px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg shadow-voxpro-coral/20">
-                    Join Waitlist
-                  </button>
+                  <WaitlistForm />
                 </div>
                 <div className="mt-12 space-y-6">
                   {[
