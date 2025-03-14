@@ -18,3 +18,6 @@ watch_dir = "src"
 
 [triggers]
 crons = []
+
+[observability.logs]
+enabled = true
