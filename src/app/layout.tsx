@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: 'swap',
+  preload: true,
+  weight: ['400', '500', '600', '700'],
+});
 
 export const metadata: Metadata = {
   title: "Voxpro - AI-Powered Voice Training",
@@ -14,6 +20,12 @@ export const metadata: Metadata = {
     ],
     apple: '/logo.png',
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  themeColor: '#0A0B2E',
 };
 
 export default function RootLayout({
@@ -22,9 +34,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans bg-voxpro-navy text-white`}>
-        {children}
+    <html lang="en" className={inter.variable}>
+      <body className="font-sans antialiased bg-voxpro-navy text-white selection:bg-voxpro-coral selection:text-voxpro-navy">
+        <div className="relative min-h-screen">
+          {children}
+        </div>
       </body>
     </html>
   );

@@ -17,33 +17,60 @@ export default function Header() {
 
   return (
     <header className="fixed w-full z-50">
-      <div className="absolute inset-0 bg-voxpro-navy/95 backdrop-blur-sm" />
-      <nav className="container mx-auto px-4 py-4 relative">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Voxpro Logo" width={40} height={40} className="rounded-xl" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-white to-voxpro-light bg-clip-text text-transparent">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="absolute inset-0 bg-voxpro-navy/80 backdrop-blur-md border-b border-white/5"
+      />
+      <nav className="container mx-auto relative">
+        <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center gap-3"
+          >
+            <div className="relative w-10 h-10">
+              <Image
+                src="/logo.png"
+                alt="Voxpro Logo"
+                fill
+                className="object-cover rounded-xl"
+              />
+            </div>
+            <span className="text-2xl font-bold gradient-text">
               Voxpro
             </span>
-          </div>
+          </motion.div>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="hidden md:flex items-center gap-8"
+          >
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-voxpro-gray hover:text-voxpro-coral transition-colors"
+                className="text-lg text-voxpro-gray hover:text-white transition-colors"
               >
                 {item.name}
               </Link>
             ))}
-          </div>
+            <Link
+              href="#pricing"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-voxpro-coral to-voxpro-coral-light text-voxpro-navy font-semibold hover:opacity-90 transition-opacity hover-scale"
+            >
+              Get Started
+            </Link>
+          </motion.div>
 
           {/* Mobile menu button */}
-          <button
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             type="button"
-            className="md:hidden p-2 text-voxpro-gray hover:text-voxpro-coral transition-colors"
+            className="md:hidden p-2 text-voxpro-gray hover:text-white transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span className="sr-only">Open main menu</span>
@@ -52,7 +79,7 @@ export default function Header() {
             ) : (
               <Bars3Icon className="h-6 w-6" />
             )}
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile menu */}
@@ -62,19 +89,27 @@ export default function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden mt-4"
+              transition={{ duration: 0.2 }}
+              className="md:hidden glass-panel mx-4 mt-2 overflow-hidden"
             >
-              <div className="flex flex-col gap-4 pb-4">
+              <div className="flex flex-col gap-4 p-6">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-voxpro-gray hover:text-voxpro-coral transition-colors"
+                    className="text-lg text-voxpro-gray hover:text-white transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
+                <Link
+                  href="#pricing"
+                  className="mt-2 px-4 py-2 rounded-full bg-gradient-to-r from-voxpro-coral to-voxpro-coral-light text-voxpro-navy font-semibold text-center hover:opacity-90 transition-opacity"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Get Started
+                </Link>
               </div>
             </motion.div>
           )}
