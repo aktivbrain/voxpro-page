@@ -78,42 +78,50 @@ async function handleRequest(request) {
     // Send confirmation email
     try {
       console.log('📧 Sending confirmation email via Resend')
+      const emailPayload = {
+        from: 'Voxpro <noreply@voxpro.app>',
+        to: email,
+        subject: 'Welcome to Voxpro Waitlist',
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h1 style="color: #FF9EAE; margin-bottom: 24px;">Welcome to Voxpro!</h1>
+            <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
+              Thank you for joining our waitlist. We're excited to have you on board!
+            </p>
+            <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
+              We'll keep you updated on our launch and any exciting developments.
+            </p>
+            <div style="margin-top: 32px; color: #666;">
+              <p style="margin-bottom: 8px;">Best regards,</p>
+              <p style="margin-bottom: 0;">The Voxpro Team</p>
+            </div>
+          </div>
+        `
+      }
+      
+      console.log('📧 Email payload:', JSON.stringify(emailPayload))
+      
       const response = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${RESEND_API_KEY}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          from: 'Voxpro <noreply@voxpro.app>',
-          to: email,
-          subject: 'Welcome to Voxpro Waitlist',
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h1 style="color: #FF9EAE; margin-bottom: 24px;">Welcome to Voxpro!</h1>
-              <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-                Thank you for joining our waitlist. We're excited to have you on board!
-              </p>
-              <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-                We'll keep you updated on our launch and any exciting developments.
-              </p>
-              <div style="margin-top: 32px; color: #666;">
-                <p style="margin-bottom: 8px;">Best regards,</p>
-                <p style="margin-bottom: 0;">The Voxpro Team</p>
-              </div>
-            </div>
-          `
-        })
+        body: JSON.stringify(emailPayload)
       })
 
       const responseText = await response.text()
       console.log('📬 Resend API response:', responseText)
+      console.log('📬 Resend API status:', response.status)
+      console.log('📬 Resend API headers:', JSON.stringify(Object.fromEntries(response.headers)))
 
       if (!response.ok) {
         throw new Error(`Resend API error: ${responseText}`)
       }
     } catch (emailError) {
       console.error('❌ Email Error:', emailError)
+      console.error('❌ API Key present:', !!RESEND_API_KEY)
+      console.error('❌ API Key length:', RESEND_API_KEY ? RESEND_API_KEY.length : 0)
       throw new Error('Failed to send email: ' + emailError.message)
     }
 
