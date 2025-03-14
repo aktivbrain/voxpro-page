@@ -14,8 +14,13 @@ export default function Home() {
       <section className="relative pt-32 pb-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-conic from-voxpro-blue/20 via-transparent to-transparent opacity-30" />
         <div className="container mx-auto text-center relative">
-          <div className="inline-block mb-6 px-6 py-3 bg-white/5 backdrop-blur-sm rounded-full border border-white/10">
-            <span className="text-voxpro-coral font-semibold text-lg">Coming Soon to App Store</span>
+          <div className="inline-block mb-6 px-6 py-3 bg-gradient-to-r from-voxpro-coral/20 to-voxpro-coral-light/20 backdrop-blur-md rounded-full border border-voxpro-coral/30">
+            <div className="flex items-center gap-3">
+              <svg className="w-5 h-5 text-voxpro-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3l7 7-7 7" />
+              </svg>
+              <span className="text-voxpro-coral font-semibold text-lg">Coming Soon to App Store</span>
+            </div>
           </div>
           <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-white via-voxpro-light to-voxpro-coral bg-clip-text text-transparent leading-tight">
             Master Your Voice with
@@ -159,21 +164,24 @@ export default function Home() {
             <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-voxpro-light bg-clip-text text-transparent">
               Simple Pricing
             </h2>
-            <p className="text-voxpro-gray text-xl max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
               Join our early access program and get exclusive benefits
             </p>
           </div>
           <div className="max-w-lg mx-auto">
             <div className="relative group">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-voxpro-coral to-voxpro-blue opacity-75 rounded-2xl blur"></div>
-              <div className="relative bg-white/5 backdrop-blur-sm p-10 rounded-2xl border border-white/10">
+              <div className="relative bg-voxpro-navy-light/80 backdrop-blur-md p-10 rounded-2xl border border-white/10">
                 <div className="text-center">
-                  <h3 className="text-3xl font-semibold mb-4">Early Access Offer</h3>
-                  <div className="text-6xl font-bold mb-6">
-                    $9.99
-                    <span className="text-xl text-voxpro-gray">/month</span>
+                  <div className="inline-block px-4 py-1 bg-voxpro-coral/20 rounded-full mb-6">
+                    <span className="text-voxpro-coral font-semibold">Limited Time Offer</span>
                   </div>
-                  <p className="text-voxpro-gray text-lg mb-10">Get unlimited access to all features</p>
+                  <h3 className="text-3xl font-semibold mb-4 text-white">Early Access Offer</h3>
+                  <div className="text-6xl font-bold mb-6 text-white">
+                    $9.99
+                    <span className="text-xl text-white/60">/month</span>
+                  </div>
+                  <p className="text-lg text-white/80 mb-10">Get unlimited access to all features</p>
                   <button className="w-full bg-gradient-to-r from-voxpro-coral to-voxpro-coral-light text-voxpro-navy px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg shadow-voxpro-coral/20">
                     Join Waitlist
                   </button>
@@ -186,10 +194,12 @@ export default function Home() {
                     "Priority access to new features"
                   ].map((feature, index) => (
                     <div key={index} className="flex items-center gap-4">
-                      <svg className="w-6 h-6 text-voxpro-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className="text-voxpro-gray text-lg">{feature}</span>
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-voxpro-coral/20 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-voxpro-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="text-lg text-white/90">{feature}</span>
                     </div>
                   ))}
                 </div>

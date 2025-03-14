@@ -9,17 +9,28 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    text-rendering: optimizeLegibility;
-    -webkit-text-size-adjust: 100%;
-    tab-size: 4;
+    @apply scroll-smooth antialiased;
   }
 
   body {
-    @apply bg-voxpro-navy text-white;
+    @apply bg-voxpro-navy text-white min-h-screen;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl md:text-5xl font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-bold;
+  }
+
+  p {
+    @apply text-lg text-voxpro-gray leading-relaxed;
   }
 
   /* Modern scrollbar */
@@ -43,14 +54,13 @@
   :focus-visible {
     @apply outline-none ring-2 ring-voxpro-coral ring-offset-2 ring-offset-voxpro-navy;
   }
-
-  /* Base heading styles */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
-  }
 }
 
 @layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
   .glass-panel {
     @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl;
   }
@@ -62,12 +72,45 @@
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
   }
+
+  .btn {
+    @apply px-6 py-3 rounded-full font-semibold transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-voxpro-coral to-voxpro-coral-light text-voxpro-navy hover:opacity-90 hover-scale shadow-lg shadow-voxpro-coral/20;
+  }
+
+  .btn-secondary {
+    @apply btn border-2 border-voxpro-coral text-voxpro-coral hover:bg-voxpro-coral/10;
+  }
 }
 
-@layer utilities {
-  .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
+/* Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-voxpro-navy;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-voxpro-blue rounded-full transition-colors;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-voxpro-blue-light;
+}
+
+/* Focus */
+:focus-visible {
+  @apply outline-none ring-2 ring-voxpro-coral ring-offset-2 ring-offset-voxpro-navy;
+}
+
+/* Selection */
+::selection {
+  @apply bg-voxpro-coral text-voxpro-navy;
 }
 
 @theme inline {
