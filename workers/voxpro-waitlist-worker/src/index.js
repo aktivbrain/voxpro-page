@@ -79,24 +79,10 @@ async function handleRequest(request) {
     try {
       console.log('📧 Sending confirmation email via Resend')
       const emailPayload = {
-        from: 'Voxpro <onboarding@resend.dev>',
+        from: 'Voxpro <waitlist@voxpro.app>',
         to: email,
         subject: 'Welcome to Voxpro Waitlist',
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #FF9EAE; margin-bottom: 24px;">Welcome to Voxpro!</h1>
-            <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-              Thank you for joining our waitlist. We're excited to have you on board!
-            </p>
-            <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-              We'll keep you updated on our launch and any exciting developments.
-            </p>
-            <div style="margin-top: 32px; color: #666;">
-              <p style="margin-bottom: 8px;">Best regards,</p>
-              <p style="margin-bottom: 0;">The Voxpro Team</p>
-            </div>
-          </div>
-        `
+        text: 'Thank you for joining our waitlist. We are excited to have you on board!'
       }
       
       console.log('📧 Email payload:', JSON.stringify(emailPayload))
