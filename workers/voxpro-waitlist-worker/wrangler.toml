@@ -1,0 +1,12 @@
+name = "voxpro-waitlist-worker"
+main = "src/index.js"
+compatibility_date = "2024-03-14"
+
+# KV Namespace binding
+kv_namespaces = [
+  { binding = "WAITLIST", id = "voxpro-waitlist" }
+]
+
+[vars]
+# The API key will be set through the Cloudflare dashboard
+# RESEND_API_KEY = "your-api-key-here" 
