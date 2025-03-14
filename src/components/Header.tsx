@@ -16,12 +16,15 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed w-full bg-voxpro-navy/80 backdrop-blur-lg z-50">
-      <nav className="container mx-auto px-4 py-4">
+    <header className="fixed w-full z-50">
+      <div className="absolute inset-0 bg-voxpro-navy/95 backdrop-blur-sm" />
+      <nav className="container mx-auto px-4 py-4 relative">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Voxpro Logo" width={40} height={40} className="rounded-xl" />
-            <span className="text-2xl font-bold">Voxpro</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-white to-voxpro-light bg-clip-text text-transparent">
+              Voxpro
+            </span>
           </div>
 
           {/* Desktop navigation */}
@@ -30,7 +33,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-voxpro-coral transition"
+                className="text-voxpro-gray hover:text-voxpro-coral transition-colors"
               >
                 {item.name}
               </Link>
@@ -40,7 +43,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden p-2 text-gray-300"
+            className="md:hidden p-2 text-voxpro-gray hover:text-voxpro-coral transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span className="sr-only">Open main menu</span>
@@ -66,7 +69,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-gray-300 hover:text-voxpro-coral transition"
+                    className="text-voxpro-gray hover:text-voxpro-coral transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
