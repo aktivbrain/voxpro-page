@@ -4,7 +4,7 @@ compatibility_date = "2024-03-14"
 
 # KV Namespace binding
 kv_namespaces = [
-  { binding = "WAITLIST", id = "c2cf2f306479978d46f122ba5c128e9e" }
+  { binding = "WAITLIST", id = "20b5411f4aaa48b1813507383bae3b93" }
 ]
 
 # Environment variables will be set in the Cloudflare dashboard
