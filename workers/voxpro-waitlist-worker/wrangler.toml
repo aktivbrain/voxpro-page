@@ -7,6 +7,14 @@ kv_namespaces = [
   { binding = "WAITLIST", id = "voxpro-waitlist" }
 ]
 
+# Environment variables will be set in the Cloudflare dashboard
 [vars]
-# The API key will be set through the Cloudflare dashboard
 # RESEND_API_KEY = "your-api-key-here"
+
+# Enable logs
+[build]
+command = ""
+watch_dir = "src"
+
+[triggers]
+crons = []
