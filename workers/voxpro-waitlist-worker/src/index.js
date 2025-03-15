@@ -69,17 +69,11 @@ async function handleRequest(request, env) {
       throw new Error('Failed to store email in KV: ' + kvError.message)
     }
 
-    // Send confirmation email using Cloudflare Email API
+    // Send confirmation email using MailChannels
     try {
-      console.log('📧 Sending confirmation email via Cloudflare')
+      console.log('📧 Sending confirmation email via MailChannels')
       
-      const msg = createMimeMessage();
-      msg.setSender({ name: "Voxpro", addr: "waitlist@voxpro.app" });
-      msg.setRecipient(email);
-      msg.setSubject("Welcome to the Voxpro Waitlist");
-      msg.addMessage({
-        contentType: 'text/plain',
-        data: `Hi there,
+      const emailContent = `Hi there,
 
 Thank you for joining the Voxpro waitlist! We're excited to have you on board.
 
@@ -92,15 +86,37 @@ The Voxpro Team
 
 ---
 To unsubscribe from these notifications, please reply with "unsubscribe" in the subject line.`
-      });
 
-      const message = new EmailMessage(
-        "waitlist@voxpro.app",
-        email,
-        msg.asRaw()
-      );
+      const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          personalizations: [
+            {
+              to: [{ email: email }],
+            },
+          ],
+          from: {
+            email: "waitlist@voxpro.app",
+            name: "Voxpro"
+          },
+          subject: "Welcome to the Voxpro Waitlist",
+          content: [
+            {
+              type: 'text/plain',
+              value: emailContent
+            }
+          ]
+        }),
+      })
 
-      await env.WAITLIST_EMAIL.send(message);
+      if (!response.ok) {
+        const responseText = await response.text()
+        throw new Error(`MailChannels API error: ${responseText}`)
+      }
+
       console.log('📬 Email sent successfully')
 
     } catch (emailError) {
@@ -137,5 +153,20 @@ function isValidEmail(email) {
 export default {
   async fetch(request, env, ctx) {
     return handleRequest(request, env)
+  },
+  async email(message, env, ctx) {
+    try {
+      // Forward the email to the destination address
+      await message.forward("aktivbrain@gmail.com");
+      
+      // Log successful forwarding
+      console.log(`Successfully forwarded email from ${message.from} to aktivbrain@gmail.com`);
+      
+      return;
+    } catch (error) {
+      console.error("Error forwarding email:", error);
+      message.setReject("Failed to process email");
+      return;
+    }
   }
 }

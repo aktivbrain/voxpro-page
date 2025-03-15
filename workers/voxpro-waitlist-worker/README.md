@@ -3,14 +3,11 @@
 This Cloudflare Worker handles email waitlist signups for Voxpro. It:
 1. Validates email addresses
 2. Stores them in KV storage
-3. Sends confirmation emails using Resend
+3. Sends confirmation emails using Cloudflare's MailChannels
 
 ## Setup
 
-1. Make sure you have the following environment variables set in Cloudflare:
-   - `RESEND_API_KEY`: Your Resend API key
-
-2. Ensure the KV namespace is set up:
+1. Ensure the KV namespace is set up:
    - Namespace: `voxpro-waitlist`
    - Binding name: `WAITLIST`
 

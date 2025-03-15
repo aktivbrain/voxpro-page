@@ -10,7 +10,6 @@ kv_namespaces = [
 
 # Environment variables will be set in the Cloudflare dashboard
 [vars]
-# RESEND_API_KEY = "your-api-key-here"
 
 # Enable logs
 [build]
