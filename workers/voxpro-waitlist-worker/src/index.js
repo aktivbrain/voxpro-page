@@ -79,7 +79,7 @@ async function handleRequest(request) {
     try {
       console.log('📧 Sending confirmation email via Resend')
       const emailPayload = {
-        from: 'Voxpro <onboarding@resend.dev>',
+        from: 'Voxpro <waitlist@voxpro.app>',
         to: email,
         subject: 'Welcome to the Voxpro Waitlist',
         text: `Hi there,
