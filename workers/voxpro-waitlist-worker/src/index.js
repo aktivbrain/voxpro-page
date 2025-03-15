@@ -1,15 +1,6 @@
 import { EmailMessage } from "cloudflare:email";
 import { createMimeMessage } from "mimetext";
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
-
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
-}
-
 async function handleRequest(request, env) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -71,7 +62,7 @@ async function handleRequest(request, env) {
     // Store email in KV
     try {
       const timestamp = new Date().toISOString()
-      await WAITLIST.put(email, timestamp)
+      await env.WAITLIST.put(email, timestamp)
       console.log('💾 Email stored in KV:', email)
     } catch (kvError) {
       console.error('❌ KV Error:', kvError)
@@ -135,5 +126,16 @@ To unsubscribe from these notifications, please reply with "unsubscribe" in the 
       status: 500,
       headers: corsHeaders
     })
+  }
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+export default {
+  async fetch(request, env, ctx) {
+    return handleRequest(request, env)
   }
 }

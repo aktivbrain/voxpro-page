@@ -1,6 +1,7 @@
 name = "voxpro-waitlist-worker"
 main = "src/index.js"
 compatibility_date = "2024-03-14"
+compatibility_flags = ["nodejs_compat"]
 
 # KV Namespace binding
 kv_namespaces = [
@@ -22,6 +23,6 @@ crons = []
 [observability.logs]
 enabled = true
 
-send_email = [
-  { name = "WAITLIST_EMAIL", destination_address = "waitlist@voxpro.app" }
-]
+[[send_email]]
+name = "WAITLIST_EMAIL"
+destination_address = "waitlist@voxpro.app"
