@@ -69,9 +69,9 @@ async function handleRequest(request, env) {
       throw new Error('Failed to store email in KV: ' + kvError.message)
     }
 
-    // Send confirmation email using MailChannels
+    // Send confirmation email using Email Workers
     try {
-      console.log('📧 Sending confirmation email via MailChannels')
+      console.log('📧 Sending confirmation email')
       
       const emailContent = `Hi there,
 
@@ -87,36 +87,14 @@ The Voxpro Team
 ---
 To unsubscribe from these notifications, please reply with "unsubscribe" in the subject line.`
 
-      const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          personalizations: [
-            {
-              to: [{ email: email }],
-            },
-          ],
-          from: {
-            email: "waitlist@voxpro.app",
-            name: "Voxpro"
-          },
-          subject: "Welcome to the Voxpro Waitlist",
-          content: [
-            {
-              type: 'text/plain',
-              value: emailContent
-            }
-          ]
-        }),
-      })
+      const message = {
+        from: 'waitlist@voxpro.app',
+        to: email,
+        subject: 'Welcome to the Voxpro Waitlist',
+        text: emailContent
+      };
 
-      if (!response.ok) {
-        const responseText = await response.text()
-        throw new Error(`MailChannels API error: ${responseText}`)
-      }
-
+      await env.WAITLIST_EMAIL.send(message);
       console.log('📬 Email sent successfully')
 
     } catch (emailError) {
