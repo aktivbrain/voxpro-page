@@ -21,3 +21,7 @@ crons = []
 
 [observability.logs]
 enabled = true
+
+send_email = [
+  { name = "WAITLIST_EMAIL", destination_address = "waitlist@voxpro.app" }
+]

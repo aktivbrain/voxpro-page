@@ -1,3 +1,6 @@
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from "mimetext";
+
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -7,7 +10,7 @@ function isValidEmail(email) {
   return emailRegex.test(email)
 }
 
-async function handleRequest(request) {
+async function handleRequest(request, env) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -75,14 +78,17 @@ async function handleRequest(request) {
       throw new Error('Failed to store email in KV: ' + kvError.message)
     }
 
-    // Send confirmation email
+    // Send confirmation email using Cloudflare Email API
     try {
-      console.log('📧 Sending confirmation email via Resend')
-      const emailPayload = {
-        from: 'Voxpro <hello@voxpro.app>',
-        to: email,
-        subject: 'Welcome to the Voxpro Waitlist',
-        text: `Hi there,
+      console.log('📧 Sending confirmation email via Cloudflare')
+      
+      const msg = createMimeMessage();
+      msg.setSender({ name: "Voxpro", addr: "waitlist@voxpro.app" });
+      msg.setRecipient(email);
+      msg.setSubject("Welcome to the Voxpro Waitlist");
+      msg.addMessage({
+        contentType: 'text/plain',
+        data: `Hi there,
 
 Thank you for joining the Voxpro waitlist! We're excited to have you on board.
 
@@ -95,31 +101,19 @@ The Voxpro Team
 
 ---
 To unsubscribe from these notifications, please reply with "unsubscribe" in the subject line.`
-      }
-      
-      console.log('📧 Email payload:', JSON.stringify(emailPayload))
-      
-      const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(emailPayload)
-      })
+      });
 
-      const responseText = await response.text()
-      console.log('📬 Resend API response:', responseText)
-      console.log('📬 Resend API status:', response.status)
-      console.log('📬 Resend API headers:', JSON.stringify(Object.fromEntries(response.headers)))
+      const message = new EmailMessage(
+        "waitlist@voxpro.app",
+        email,
+        msg.asRaw()
+      );
 
-      if (!response.ok) {
-        throw new Error(`Resend API error: ${responseText}`)
-      }
+      await env.WAITLIST_EMAIL.send(message);
+      console.log('📬 Email sent successfully')
+
     } catch (emailError) {
       console.error('❌ Email Error:', emailError)
-      console.error('❌ API Key present:', !!RESEND_API_KEY)
-      console.error('❌ API Key length:', RESEND_API_KEY ? RESEND_API_KEY.length : 0)
       throw new Error('Failed to send email: ' + emailError.message)
     }
 
